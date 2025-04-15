@@ -16,7 +16,7 @@ function SubredditPostCommentCard({ comment }: SubredditPostCommentCardProps) {
           {dayjs.unix(comment.createdUtc).fromNow()}
         </p>
       </div>
-      <p className={styles['subreddit-post-comment-card__content']}>{comment.body}</p>
+      <p className={styles['subreddit-post-comment-card__body']}>{comment.body}</p>
     </Card>
   )
 }
