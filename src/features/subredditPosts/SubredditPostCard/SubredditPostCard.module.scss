@@ -1,0 +1,92 @@
+.subreddit-post-card {
+  display: flex;
+
+  &__vote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 40px;
+  }
+
+  &__vote-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #888;
+    transition:
+      color 0.2s ease,
+      scale 0.2s linear;
+
+    &--up {
+      &:hover {
+        color: $color-success;
+        scale: 1.1;
+      }
+    }
+    &--down {
+      &:hover {
+        color: $color-alert;
+        scale: 1.1;
+      }
+    }
+  }
+
+  &__vote-count {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 1.2rem;
+    margin: 0 0 0.25rem;
+    color: #222;
+  }
+
+  &__body {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    flex-wrap: nowrap;
+  }
+
+  &__author,
+  &__time,
+  &__comments {
+    white-space: nowrap;
+  }
+
+  &__comments {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__comments-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &--active,
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #ccc;
+}

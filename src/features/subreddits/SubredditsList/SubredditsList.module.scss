@@ -1,0 +1,16 @@
+.subreddits-list {
+  & .link-btn {
+    cursor: pointer;
+    border: none;
+    transition:
+      color 0.2s ease,
+      scale 0.2s linear;
+    background: none;
+    padding: 0;
+
+    &--active {
+      color: $color-primary;
+      scale: 1.1;
+    }
+  }
+}

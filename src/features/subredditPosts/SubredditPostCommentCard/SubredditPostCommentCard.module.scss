@@ -1,0 +1,20 @@
+.subreddit-post-comment-card {
+  margin: 0.75rem 0;
+
+  &__metadata {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    flex-wrap: nowrap;
+  }
+
+  &__author {
+    color: $color-primary;
+  }
+
+  &__time {
+    font-style: italic;
+  }
+}

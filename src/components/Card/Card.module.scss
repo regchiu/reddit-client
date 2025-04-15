@@ -1,0 +1,17 @@
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  gap: 1rem;
+  transition: box-shadow 0.2s;
+  margin-bottom: 1rem;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &--loading {
+    opacity: 0.8;
+  }
+}
