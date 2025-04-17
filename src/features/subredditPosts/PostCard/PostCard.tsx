@@ -1,4 +1,3 @@
-import React from 'react'
 import { AiOutlineCaretUp, AiOutlineCaretDown, AiOutlineComment } from 'react-icons/ai'
 import type { Post } from '@/features/subredditPosts/subredditPostsSlice'
 import styles from './PostCard.module.scss'
@@ -15,26 +14,27 @@ interface PostCardProps {
 
 function PostCard({ post, onToggleComments }: PostCardProps) {
   function renderComments() {
-    let comments: React.ReactNode
     if (post.commentsStatus === 'loading') {
-      comments = <CommentCardSkeleton />
-    } else if (post.commentsStatus === 'succeeded') {
-      if (post.showingComments && post.comments.length > 0) {
-        comments = (
+      return <CommentCardSkeleton />
+    }
+
+    if (post.commentsStatus === 'succeeded') {
+      if (post.showingComments) {
+        return (
           <>
             {post.comments.map((comment) => (
               <CommentCard key={comment.id} comment={comment} />
             ))}
           </>
         )
-      } else {
-        comments = null
       }
-    } else if (post.commentsStatus === 'failed') {
-      comments = <h3>{post.commentsError}</h3>
     }
 
-    return comments
+    if (post.commentsStatus === 'failed') {
+      return <h3>{post.commentsError}</h3>
+    }
+
+    return null
   }
   return (
     <Card className={styles['post-card']}>
