@@ -1,19 +1,19 @@
 import React from 'react'
 import { AiOutlineCaretUp, AiOutlineCaretDown, AiOutlineComment } from 'react-icons/ai'
 import type { Post } from '@/features/subredditPosts/subredditPostsSlice'
-import styles from './SubredditPostCard.module.scss'
+import styles from './PostCard.module.scss'
 import cn from 'classnames'
 import dayjs from '@/utils/dayjs'
 import Card from '@/components/Card/Card'
 import CommentCard from '../CommentCard/CommentCard'
 import CommentCardSkeleton from '../CommentCard/CommentCardSkeleton'
 
-interface SubredditPostCardProps {
+interface PostCardProps {
   post: Post
   onToggleComments: (permalink: string) => void
 }
 
-function SubredditPostCard({ post, onToggleComments }: SubredditPostCardProps) {
+function PostCard({ post, onToggleComments }: PostCardProps) {
   function renderComments() {
     let comments: React.ReactNode
     if (post.commentsStatus === 'loading') {
@@ -37,40 +37,28 @@ function SubredditPostCard({ post, onToggleComments }: SubredditPostCardProps) {
     return comments
   }
   return (
-    <Card className={styles['subreddit-post-card']}>
-      <div className={styles['subreddit-post-card__vote']}>
-        <div
-          className={cn(
-            styles['subreddit-post-card__vote-btn'],
-            styles['subreddit-post-card__vote-btn--up']
-          )}
-        >
+    <Card className={styles['post-card']}>
+      <div className={styles['post-card__vote']}>
+        <div className={cn(styles['post-card__vote-btn'], styles['post-card__vote-btn--up'])}>
           <AiOutlineCaretUp />
         </div>
-        <div className={styles['subreddit-post-card__vote-count']}>{post.ups}</div>
-        <div
-          className={cn(
-            styles['subreddit-post-card__vote-btn'],
-            styles['subreddit-post-card__vote-btn--down']
-          )}
-        >
+        <div className={styles['post-card__vote-count']}>{post.ups}</div>
+        <div className={cn(styles['post-card__vote-btn'], styles['post-card__vote-btn--down'])}>
           <AiOutlineCaretDown />
         </div>
       </div>
-      <div className={styles['subreddit-post-card__content']}>
-        <h2 className={styles['subreddit-post-card__title']}>{post.title}</h2>
-        <p className={styles['subreddit-post-card__body']}>{post.selftext}</p>
+      <div className={styles['post-card__content']}>
+        <h2 className={styles['post-card__title']}>{post.title}</h2>
+        <p className={styles['post-card__body']}>{post.selftext}</p>
         <hr className={styles['divider']} />
-        <div className={styles['subreddit-post-card__meta']}>
-          <span className={styles['subreddit-post-card__author']}>{post.author}</span>
-          <span className={styles['subreddit-post-card__time']}>
-            {dayjs.unix(post.createdUtc).fromNow()}
-          </span>
-          <span className={styles['subreddit-post-card__comments']}>
+        <div className={styles['post-card__meta']}>
+          <span className={styles['post-card__author']}>{post.author}</span>
+          <span className={styles['post-card__time']}>{dayjs.unix(post.createdUtc).fromNow()}</span>
+          <span className={styles['post-card__comments']}>
             <button
               className={cn(
-                styles['subreddit-post-card__comments-btn'],
-                post.showingComments && styles['subreddit-post-card__comments-btn--active']
+                styles['post-card__comments-btn'],
+                post.showingComments && styles['post-card__comments-btn--active']
               )}
               onClick={() => onToggleComments(post.permalink)}
             >
@@ -85,4 +73,4 @@ function SubredditPostCard({ post, onToggleComments }: SubredditPostCardProps) {
   )
 }
 
-export default SubredditPostCard
+export default PostCard

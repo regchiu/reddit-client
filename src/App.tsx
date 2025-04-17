@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from './app/hooks'
 import Layout from './components/Layout/Layout'
-import SubredditPostCard from '@/features/subredditPosts/SubredditPostCard/SubredditPostCard'
+import PostCard from '@/features/subredditPosts/PostCard/PostCard'
+import PostCardSkeleton from '@/features/subredditPosts/PostCard/PostCardSkeleton'
 import SubredditsList from '@/features/subreddits/SubredditsList/SubredditsList'
-import SubredditPostCardSkeleton from '@/features/subredditPosts/SubredditPostCard/SubRedditPostCardSkeleton'
 import SearchTermInput from '@/features/subredditPosts/SearchTermInput/SearchTermInput'
 import {
   fetchSubredditPosts,
@@ -33,34 +33,35 @@ function App() {
     }
   }
 
-  let content: React.ReactNode
-
-  if (subRedditStatus === 'loading') {
-    content = (
-      <>
-        {Array.from({ length: 10 }).map((_, i) => (
-          <SubredditPostCardSkeleton key={i} />
-        ))}
-      </>
-    )
-  } else if (subRedditStatus === 'succeeded') {
-    if (subRedditPosts.length > 0) {
-      content = (
+  function renderPostCard() {
+    if (subRedditStatus === 'loading') {
+      return (
         <>
-          {subRedditPosts.map((post, index) => (
-            <SubredditPostCard
-              key={post.id}
-              post={post}
-              onToggleComments={handleToggleComments(index)}
-            />
+          {Array.from({ length: 10 }).map((_, i) => (
+            <PostCardSkeleton key={i} />
           ))}
         </>
       )
-    } else {
-      content = <h2>No posts matching "{searchTerm}"</h2>
     }
-  } else if (subRedditStatus === 'failed') {
-    content = <div>{subRedditError}</div>
+
+    if (subRedditStatus === 'succeeded') {
+      if (subRedditPosts.length > 0) {
+        return (
+          <>
+            {subRedditPosts.map((post, index) => (
+              <PostCard key={post.id} post={post} onToggleComments={handleToggleComments(index)} />
+            ))}
+          </>
+        )
+      }
+      return <h2>No posts matching "{searchTerm}"</h2>
+    }
+
+    if (subRedditStatus === 'failed') {
+      return <div>{subRedditError}</div>
+    }
+
+    return null
   }
 
   return (
@@ -69,7 +70,7 @@ function App() {
       sidebarTitle="Subreddits"
       sidebarList={<SubredditsList />}
     >
-      {content}
+      {renderPostCard()}
     </Layout>
   )
 }
