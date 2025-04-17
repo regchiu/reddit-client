@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks'
 import Layout from './components/Layout/Layout'
 import PostCard from '@/features/subredditPosts/PostCard/PostCard'
 import PostCardSkeleton from '@/features/subredditPosts/PostCard/PostCardSkeleton'
-import SubredditsList from '@/features/subreddits/SubredditsList/SubredditsList'
+import SubredditList from '@/features/subreddits/SubredditList/SubredditList'
 import SearchTermInput from '@/features/subredditPosts/SearchTermInput/SearchTermInput'
 import {
   fetchSubredditPosts,
@@ -68,7 +68,7 @@ function App() {
     <Layout
       headerEnd={<SearchTermInput />}
       sidebarTitle="Subreddits"
-      sidebarList={<SubredditsList />}
+      sidebarList={<SubredditList />}
     >
       {renderPostCard()}
     </Layout>
