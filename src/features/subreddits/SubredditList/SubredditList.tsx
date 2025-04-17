@@ -57,6 +57,8 @@ function SubredditList() {
     if (subredditsStatus === 'failed') {
       return <li>{subredditsError}</li>
     }
+
+    return null
   }
 
   return <ul className={styles['subreddits-list']}>{renderList()}</ul>
