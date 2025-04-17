@@ -1,9 +1,9 @@
 import { AiOutlineSearch } from 'react-icons/ai'
-import styles from './SearchTermInput.module.scss'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { selectSubredditPostsSearchTerm, setSearchTerm } from '../subredditPostsSlice'
 import { debounce } from '@/utils/debounce'
+import CustomInput from '@/components/CustomInput/CustomInput'
 
 function SearchTermInput() {
   const [term, setTerm] = useState('')
@@ -22,10 +22,13 @@ function SearchTermInput() {
   }
 
   return (
-    <div className={styles['search-term-input']}>
-      <AiOutlineSearch size={24} />
-      <input type="text" placeholder="Search..." value={term} onChange={handleTermChange} />
-    </div>
+    <CustomInput
+      icon={<AiOutlineSearch size={24} />}
+      type="text"
+      placeholder="Search..."
+      value={term}
+      onChange={handleTermChange}
+    />
   )
 }
 
