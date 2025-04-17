@@ -1,12 +1,12 @@
+import React from 'react'
 import { AiOutlineCaretUp, AiOutlineCaretDown, AiOutlineComment } from 'react-icons/ai'
 import type { Post } from '@/features/subredditPosts/subredditPostsSlice'
-import Card from '@/components/Card/Card'
 import styles from './SubredditPostCard.module.scss'
 import cn from 'classnames'
 import dayjs from '@/utils/dayjs'
-import SubredditPostCommentCard from '../SubredditPostCommentCard/SubredditPostCommentCard'
-import React from 'react'
-import SubredditPostCommentCardSkeleton from '../SubredditPostCommentCard/SubredditPostCommentCardSkeleton'
+import Card from '@/components/Card/Card'
+import CommentCard from '../CommentCard/CommentCard'
+import CommentCardSkeleton from '../CommentCard/CommentCardSkeleton'
 
 interface SubredditPostCardProps {
   post: Post
@@ -17,13 +17,13 @@ function SubredditPostCard({ post, onToggleComments }: SubredditPostCardProps) {
   function renderComments() {
     let comments: React.ReactNode
     if (post.commentsStatus === 'loading') {
-      comments = <SubredditPostCommentCardSkeleton />
+      comments = <CommentCardSkeleton />
     } else if (post.commentsStatus === 'succeeded') {
       if (post.showingComments && post.comments.length > 0) {
         comments = (
           <>
             {post.comments.map((comment) => (
-              <SubredditPostCommentCard key={comment.id} comment={comment} />
+              <CommentCard key={comment.id} comment={comment} />
             ))}
           </>
         )
