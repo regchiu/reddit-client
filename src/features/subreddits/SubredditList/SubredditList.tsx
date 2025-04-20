@@ -31,8 +31,8 @@ function SubredditList() {
     if (subredditsStatus === 'loading') {
       return (
         <>
-          {Array.from({ length: 30 }).map(() => (
-            <Skeleton style={{ width: '100%', height: 16, marginBottom: 6 }} />
+          {Array.from({ length: 30 }).map((_, i) => (
+            <Skeleton key={i} style={{ width: '100%', height: 16, marginBottom: 6 }} />
           ))}
         </>
       )
