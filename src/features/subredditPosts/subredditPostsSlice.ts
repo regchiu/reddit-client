@@ -107,21 +107,23 @@ const subredditPostsSlice = createSlice({
         state.error = action.error.message ?? 'error'
       })
       .addCase(fetchSubredditComments.pending, (state, action) => {
-        state.posts[action.meta.arg.index].showingComments =
-          !state.posts[action.meta.arg.index].showingComments
-        if (!state.posts[action.meta.arg.index].showingComments) {
+        const index = action.meta.arg.index
+        state.posts[index].showingComments = !state.posts[index].showingComments
+        if (!state.posts[index].showingComments) {
           return
         }
-        state.posts[action.meta.arg.index].commentsStatus = 'loading'
-        state.posts[action.meta.arg.index].commentsError = null
+        state.posts[index].commentsStatus = 'loading'
+        state.posts[index].commentsError = null
       })
       .addCase(fetchSubredditComments.fulfilled, (state, action) => {
-        state.posts[action.meta.arg.index].commentsStatus = 'succeeded'
-        state.posts[action.meta.arg.index].comments = action.payload.comments
+        const index = action.meta.arg.index
+        state.posts[index].commentsStatus = 'succeeded'
+        state.posts[index].comments = action.payload.comments
       })
       .addCase(fetchSubredditComments.rejected, (state, action) => {
-        state.posts[action.meta.arg.index].commentsStatus = 'failed'
-        state.posts[action.meta.arg.index].commentsError = action.error.message ?? 'error'
+        const index = action.meta.arg.index
+        state.posts[index].commentsStatus = 'failed'
+        state.posts[index].commentsError = action.error.message ?? 'error'
       })
   },
 })
