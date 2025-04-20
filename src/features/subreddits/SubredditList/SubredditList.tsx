@@ -7,6 +7,7 @@ import {
   selectSubredditsStatus,
 } from '@/features/subreddits/subredditsSlice'
 import {
+  fetchSubredditPosts,
   selectSubredditPostsSelectedSubredditUrl,
   setSelectedSubreddit,
 } from '@/features/subredditPosts/subredditPostsSlice'
@@ -46,7 +47,10 @@ function SubredditList() {
               styles['link-btn'],
               selectedSubreddit === subreddit.url && styles['link-btn--active']
             )}
-            onClick={() => dispatch(setSelectedSubreddit(subreddit.url))}
+            onClick={() => {
+              dispatch(setSelectedSubreddit(subreddit.url))
+              dispatch(fetchSubredditPosts(subreddit.url))
+            }}
           >
             {subreddit.displayName}
           </button>
