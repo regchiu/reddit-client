@@ -6,6 +6,7 @@ import dayjs from '@/utils/dayjs'
 import Card from '@/components/Card/Card'
 import CommentCard from '../CommentCard/CommentCard'
 import CommentCardSkeleton from '../CommentCard/CommentCardSkeleton'
+import ReactMarkdown from 'react-markdown'
 
 interface PostCardProps {
   post: Post
@@ -49,7 +50,7 @@ function PostCard({ post, onToggleComments }: PostCardProps) {
       </div>
       <div className={styles['post-card__content']}>
         <h2 className={styles['post-card__title']}>{post.title}</h2>
-        <p className={styles['post-card__body']}>{post.selftext}</p>
+        <ReactMarkdown>{post.selftext}</ReactMarkdown>
         <hr className={styles['divider']} />
         <div className={styles['post-card__meta']}>
           <span className={styles['post-card__author']}>{post.author}</span>
