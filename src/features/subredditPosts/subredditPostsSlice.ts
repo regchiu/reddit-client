@@ -65,7 +65,17 @@ export const fetchSubredditPosts = createAppAsyncThunk(
 
 export const fetchSubredditComments = createAppAsyncThunk(
   'subredditPosts/fetchSubredditComments',
-  async ({ index, permalink }: { index: number; permalink: string }) => {
+  async ({ index, permalink }: { index: number; permalink: string }, { dispatch, getState }) => {
+    // If we're hiding comment, don't fetch the comments.
+    dispatch(toggleShowingComments(index))
+    const { subredditPosts } = getState()
+    if (!subredditPosts.posts[index].showingComments) {
+      return {
+        index,
+        comments: subredditPosts.posts[index].comments,
+      }
+    }
+
     const comments = await getPostComments(permalink)
 
     return {
@@ -91,6 +101,9 @@ const subredditPostsSlice = createSlice({
     setSearchTerm(state, action) {
       state.searchTerm = action.payload
     },
+    toggleShowingComments(state, action) {
+      state.posts[action.payload].showingComments = !state.posts[action.payload].showingComments
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -108,10 +121,6 @@ const subredditPostsSlice = createSlice({
       })
       .addCase(fetchSubredditComments.pending, (state, action) => {
         const index = action.meta.arg.index
-        state.posts[index].showingComments = !state.posts[index].showingComments
-        if (!state.posts[index].showingComments) {
-          return
-        }
         state.posts[index].commentsStatus = 'loading'
         state.posts[index].commentsError = null
       })
@@ -128,7 +137,8 @@ const subredditPostsSlice = createSlice({
   },
 })
 
-export const { setSelectedSubreddit, setSearchTerm } = subredditPostsSlice.actions
+export const { setSelectedSubreddit, setSearchTerm, toggleShowingComments } =
+  subredditPostsSlice.actions
 
 export default subredditPostsSlice.reducer
 
