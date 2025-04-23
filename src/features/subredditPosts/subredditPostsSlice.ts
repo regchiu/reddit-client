@@ -23,6 +23,7 @@ export interface Post {
   comments: Comment[]
   commentsStatus: 'idle' | 'loading' | 'succeeded' | 'failed'
   commentsError: string | null
+  url: string
 }
 
 interface SubredditPostsState {
@@ -59,6 +60,7 @@ export const fetchSubredditPosts = createAppAsyncThunk(
       numComments: post.num_comments,
       commentsStatus: 'idle',
       commentsError: null,
+      url: post.url,
     }))
   }
 )

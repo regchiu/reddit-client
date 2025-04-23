@@ -44,8 +44,13 @@
 
   &__title {
     font-size: 1.2rem;
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.5rem;
     color: #222;
+  }
+
+  &__image {
+    max-width: 100%;
+    object-fit: contain;
   }
 
   &__meta {

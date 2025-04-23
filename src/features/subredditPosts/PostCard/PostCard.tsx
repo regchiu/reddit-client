@@ -50,6 +50,7 @@ function PostCard({ post, onToggleComments }: PostCardProps) {
       </div>
       <div className={styles['post-card__content']}>
         <h2 className={styles['post-card__title']}>{post.title}</h2>
+        <img className={styles['post-card__image']} src={post.url} alt="Post image" />
         <ReactMarkdown>{post.selftext}</ReactMarkdown>
         <hr className={styles['divider']} />
         <div className={styles['post-card__meta']}>
