@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from 'react-icons/ai'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   fetchSubredditPosts,
@@ -12,13 +12,19 @@ import useDebounceCallback from '@/hooks/useDebounceCallback'
 function SearchTermInput() {
   const dispatch = useAppDispatch()
   const searchTerm = useAppSelector(selectSubredditPostsSearchTerm)
+  const [term, setTerm] = useState('')
 
-  const debounceSearch = useDebounceCallback(() => {
+  useEffect(() => {
+    setTerm(searchTerm)
+  }, [searchTerm])
+
+  const debounceSearch = useDebounceCallback((term: string) => {
+    dispatch(setSearchTerm(term))
     dispatch(fetchSubredditPosts())
   })
 
   function handleTermChange(e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch(setSearchTerm(e.target.value))
+    setTerm(e.target.value)
     debounceSearch(e.target.value)
   }
 
@@ -27,7 +33,7 @@ function SearchTermInput() {
       icon={<AiOutlineSearch size={24} />}
       type="text"
       placeholder="Search..."
-      value={searchTerm}
+      value={term}
       onChange={handleTermChange}
     />
   )
