@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '@/app/store'
 import { createAppAsyncThunk } from '@/app/withTypes'
 import { getPostComments, getSubredditPosts } from '@/api/reddit'
@@ -44,8 +44,10 @@ const initialState: SubredditPostsState = {
 
 export const fetchSubredditPosts = createAppAsyncThunk(
   'subredditPosts/fetchSubredditPosts',
-  async (subredditUrl: string) => {
-    const posts = await getSubredditPosts(subredditUrl)
+  async (_, { getState }) => {
+    const { subredditPosts } = getState()
+    const { selectedSubredditUrl, searchTerm } = subredditPosts
+    const posts = await getSubredditPosts(selectedSubredditUrl, searchTerm)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return posts.map((post: any) => ({
@@ -150,14 +152,3 @@ export const selectedSubredditPostsError = (state: RootState) => state.subreddit
 export const selectSubredditPostsSelectedSubredditUrl = (state: RootState) =>
   state.subredditPosts.selectedSubredditUrl
 export const selectSubredditPostsSearchTerm = (state: RootState) => state.subredditPosts.searchTerm
-
-export const selectPostsBySearchTerm = createSelector(
-  [selectAllSubredditPosts, selectSubredditPostsSearchTerm],
-  (posts, searchTerm) => {
-    if (searchTerm !== '') {
-      return posts.filter((post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    }
-
-    return posts
-  }
-)

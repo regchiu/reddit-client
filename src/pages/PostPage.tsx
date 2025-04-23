@@ -2,29 +2,27 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import {
   fetchSubredditPosts,
-  selectPostsBySearchTerm,
-  selectSubredditPostsSelectedSubredditUrl,
   selectedSubredditPostsStatus,
   selectedSubredditPostsError,
   selectSubredditPostsSearchTerm,
   fetchSubredditComments,
+  selectAllSubredditPosts,
 } from '@/features/subredditPosts/subredditPostsSlice'
 import PostCard from '@/features/subredditPosts/PostCard/PostCard'
 import PostCardSkeleton from '@/features/subredditPosts/PostCard/PostCardSkeleton'
 
 function PostPage() {
   const dispatch = useAppDispatch()
-  const selectedSubredditUrl = useAppSelector(selectSubredditPostsSelectedSubredditUrl)
   const subRedditStatus = useAppSelector(selectedSubredditPostsStatus)
   const subRedditError = useAppSelector(selectedSubredditPostsError)
-  const subRedditPosts = useAppSelector(selectPostsBySearchTerm)
+  const subRedditPosts = useAppSelector(selectAllSubredditPosts)
   const searchTerm = useAppSelector(selectSubredditPostsSearchTerm)
 
   useEffect(() => {
     if (subRedditStatus === 'idle') {
-      dispatch(fetchSubredditPosts(selectedSubredditUrl))
+      dispatch(fetchSubredditPosts())
     }
-  }, [dispatch, selectedSubredditUrl, subRedditStatus])
+  }, [dispatch, subRedditStatus])
 
   function handleToggleComments(index: number) {
     return function (permalink: string) {

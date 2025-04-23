@@ -49,7 +49,7 @@ function SubredditList() {
             )}
             onClick={() => {
               dispatch(setSelectedSubreddit(subreddit.url))
-              dispatch(fetchSubredditPosts(subreddit.url))
+              dispatch(fetchSubredditPosts())
             }}
           >
             {subreddit.displayName}
